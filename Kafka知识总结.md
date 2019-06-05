@@ -29,7 +29,7 @@
 
 如果某个broker宕机了，那个broker上的partition在其他机器上都有副本。如果这个宕机的broker上面有某个partition的leader，那么从follower中重新选举一个新的leader出来，然后继续读写新的leader即可，这就是所谓的高可用。
 
-![<https://github.com/XU-ZHOU/Java/blob/master/pictures/1.jpg>]()
+![<https://github.com/XU-ZHOU/Java/pictures/1.jpg>]()
 
 3.**多副本之间数据如何保证同步**
 
