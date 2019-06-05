@@ -37,7 +37,7 @@
 
 然后Leader副本接收到数据之后，Follower副本会不停的给他发送请求尝试去拉取最新的数据，拉取到自己本地后，写入磁盘中。如下图所示：
 
-![<https://github.com/XU-ZHOU/Java/blob/master/pictures/2.jpg>]()
+![](<https://github.com/XU-ZHOU/Java/blob/master/pictures/2.jpg>)
 
 **4.ISR到底指的是什么东西？**
 
@@ -59,7 +59,7 @@ ISR全称是“In-Sync Replicas”，也就是**保持同步的副本**，他的
 
 如果你采用这种设置的话，那么你必须注意的一点是，可能你发送出去的消息还在半路。结果呢，Partition Leader所在Broker就直接挂了，然后结果你的客户端还认为消息发送成功了，此时就会**导致这条消息就丢失了**。
 
-![<https://github.com/XU-ZHOU/Java/blob/master/pictures/3.jpg>]()
+![](<https://github.com/XU-ZHOU/Java/blob/master/pictures/3.jpg>)
 
 **第二种选择是设置 acks = 1**，意思就是说只要Partition Leader接收到消息而且写入本地磁盘了，就认为成功了，不管他其他的Follower有没有同步过去这条消息了。
 
@@ -69,7 +69,7 @@ ISR全称是“In-Sync Replicas”，也就是**保持同步的副本**，他的
 
 但是这里有一个问题，万一Partition Leader刚刚接收到消息，Follower还没来得及同步过去，结果Leader所在的broker宕机了，此时也会导致这条消息丢失，因为人家客户端已经认为发送成功了。
 
-![<https://github.com/XU-ZHOU/Java/blob/master/pictures/4.jpg>]()
+![](<https://github.com/XU-ZHOU/Java/blob/master/pictures/4.jpg>)
 
 **最后一种情况，就是设置acks=all**，这个意思就是说，**Partition Leader接收到消息之后，还必须要求ISR列表里跟Leader保持同步的那些Follower都要把消息同步过去**，才能认为这条消息是写入成功了。
 
@@ -77,7 +77,7 @@ ISR全称是“In-Sync Replicas”，也就是**保持同步的副本**，他的
 
 此时可能Partition 2的Follower变成Leader了，此时ISR列表里只有最新的这个Follower转变成的Leader了，那么只要这个新的Leader接收消息就算成功了。
 
-![<https://github.com/XU-ZHOU/Java/blob/master/pictures/5.jpg>]()
+![](<https://github.com/XU-ZHOU/Java/blob/master/pictures/5.jpg>)
 
 **6.最后的思考**
 
